@@ -15,7 +15,7 @@ function createPage() {
   cityLabel.textContent = "City:\t";
   var submitBtn = document.createElement("button");
   submitBtn.textContent = "Tell me the weather!";
-  submitBtn.addEventListener("click", getWeather);
+  submitBtn.addEventListener("click", tellMeTheWeather);
 
   cityLabel.appendChild(cityInput);
   div.appendChild(cityLabel);
@@ -26,10 +26,29 @@ function createPage() {
   weatherDiv.classList.add("weather");
   weatherDiv.id = "weather";
   body.appendChild(weatherDiv);
+
+  var loaderDiv = document.createElement("div");
+  loaderDiv.innerHTML = `<div></div><div></div><div></div><div></div>`;
+  loaderDiv.className = "lds-ellipsis";
+  loaderDiv.style.visibility = "hidden";
+  body.appendChild(loaderDiv);
 }
 
-async function getWeather(e) {
+async function tellMeTheWeather(e) {
+  clearWeather();
+  showLoader();
   var city = document.getElementById("city").value;
+  var weather = await getWeather(city);
+  hideLoader();
+  displayWeather(weather);
+}
+
+function clearWeather() {
+  var weatherDiv = document.getElementById("weather");
+  weatherDiv.innerHTML = ``;
+}
+
+async function getWeather(city) {
   const coords = await getCoords(city);
   const lat = coords[0];
   const lon = coords[1];
@@ -38,7 +57,7 @@ async function getWeather(e) {
   );
   const responseObj = await response.json();
   console.log(responseObj);
-  displayWeather(responseObj);
+  return responseObj;
 }
 
 async function getCoords(city) {
@@ -62,5 +81,27 @@ function displayWeather(forecast) {
   const units = forecast.current_units;
   for (const [key, value] of Object.entries(forecast.current)) {
     console.log(`${key}: ${value} ${units[key]}`);
+    var li = document.createElement("li");
+    li.textContent = `${key}: ${value} ${units[key]}`;
+    current.appendChild(li);
   }
+  weatherDiv.appendChild(current);
+}
+
+function showLoader() {
+  var loader = document.querySelector(".lds-ellipsis");
+  loader.style.visibility = "visible";
+}
+
+function hideLoader() {
+  var loader = document.querySelector(".lds-ellipsis");
+  loader.style.visibility = "hidden";
+}
+
+/**
+ * Delay for a number of milliseconds
+ */
+function sleep(delay) {
+  var start = new Date().getTime();
+  while (new Date().getTime() < start + delay);
 }

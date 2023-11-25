@@ -24,6 +24,7 @@ function createPage() {
 
   var weatherDiv = document.createElement("div");
   weatherDiv.classList.add("weather");
+  weatherDiv.id = "weather";
   body.appendChild(weatherDiv);
 }
 
@@ -37,6 +38,7 @@ async function getWeather(e) {
   );
   const responseObj = await response.json();
   console.log(responseObj);
+  displayWeather(responseObj);
 }
 
 async function getCoords(city) {
@@ -52,4 +54,13 @@ async function getCoords(city) {
   console.log(lon);
   var coords = [lat, lon];
   return coords;
+}
+
+function displayWeather(forecast) {
+  var weatherDiv = document.getElementById("weather");
+  var current = document.createElement("ul");
+  const units = forecast.current_units;
+  for (const [key, value] of Object.entries(forecast.current)) {
+    console.log(`${key}: ${value} ${units[key]}`);
+  }
 }

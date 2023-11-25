@@ -2,6 +2,6 @@
 
 TOP Javascript Course: Project -- Weather App
 
-# LICENSE
+## LICENSE
 
 spinner by loading.io

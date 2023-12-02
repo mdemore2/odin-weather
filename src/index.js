@@ -79,10 +79,17 @@ function displayWeather(forecast) {
   var weatherDiv = document.getElementById("weather");
   var current = document.createElement("ul");
   const units = forecast.current_units;
+  const skip = ["time", "interval"];
   for (const [key, value] of Object.entries(forecast.current)) {
+    if (skip.includes(key)) {
+      continue;
+    }
     console.log(`${key}: ${value} ${units[key]}`);
     var li = document.createElement("li");
-    li.textContent = `${key}: ${value} ${units[key]}`;
+    li.innerHTML = `<span class="label">${key.replace(
+      /_/g,
+      " "
+    )}:</span> ${value} ${units[key]}`;
     current.appendChild(li);
   }
   weatherDiv.appendChild(current);

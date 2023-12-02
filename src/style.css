@@ -6,6 +6,9 @@
   text-decoration: none;
   flex: 1;
   font-size: 32px;
+  background-color: #082f49;
+  color:#cbd5e1;
+  text-align: center;
 }
 
 div {
@@ -15,8 +18,29 @@ div {
   gap: 16px;
 }
 
+.label {
+  text-transform: capitalize;
+}
+
+.weather {
+  font-size: 24px;
+}
+
 button {
   width: fit-content;
+  padding: 8px;
+  border-radius: 12px;
+  align-self: center;
+  color: #082f49;
+  background-color: #cbd5e1;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border-radius: 12px;
+  color: #082f49;
+  background-color: #cbd5e1;
+  font-size: 24px;
 }
 
 .lds-ellipsis {
@@ -31,7 +55,7 @@ button {
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: #1e293b;
+  background: #cbd5e1;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
   padding: 0;
 }
